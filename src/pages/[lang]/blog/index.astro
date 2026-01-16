@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../../components/BaseHead.astro';
+import FormattedDate from '../../../components/FormattedDate.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../../consts';
+import "../../../styles/global.css";
+
+export function getStaticPaths() {
+	return [
+		{ params: { lang: 'en' } },
+		{ params: { lang: 'es' } },
+	];
+}
+
+const { lang } = Astro.params;
+const allEntries = await getCollection('blog');
+
+const t = {
+	en: { title: "Blog", back: "Back to Home" },
+	es: { title: "Blog", back: "Volver al inicio" }
+}[lang as 'en' | 'es'] || { title: "Blog", back: "Back" };
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<BaseHead title={`${SITE_TITLE} - Blog`} description={SITE_DESCRIPTION} />
+		<style>
+			main { padding-top: 10vh; }
+			.debug-box { background: #000; color: #0f0; padding: 2rem; margin-bottom: 2rem; font-family: monospace; border-radius: 10px; }
+			.post-item { display: block; padding: 2rem 0; border-bottom: 1px solid #eee; text-decoration: none; color: inherit; }
+		</style>
+	</head>
+	<body>
+		<main class="container-wide">
+			<a href={`/${lang}`} class="back-link">← {t.back}</a>
+			<header class="blog-header">
+				<h1 class="blog-title">{t.title}</h1>
+			</header>
+			
+			<div class="post-list">
+				{
+					allEntries.filter(p => p.data.lang === lang).map((post) => (
+						<a href={`/${lang}/blog/${post.id}/`} class="post-item">
+							<div class="d-flex justify-content-between align-items-baseline w-100">
+								<h3 class="display-5 m-0">{post.data.title}</h3>
+								<span class="post-date"><FormattedDate date={post.data.pubDate} /></span>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</main>
+	</body>
+</html>

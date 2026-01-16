@@ -1,0 +1,113 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import "../styles/global.css";
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage, lang } = Astro.props;
+---
+
+<html lang={lang}>
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: 100%;
+				padding-top: 15vh;
+			}
+			.hero-image {
+				width: 100%;
+				max-width: 1200px;
+				margin: 0 auto 4rem;
+				padding: 0 2rem;
+			}
+			.hero-image img {
+				display: block;
+				width: 100%;
+				height: auto;
+				border-radius: 24px;
+				box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+			}
+			.prose {
+				margin: auto;
+				color: var(--text-main);
+			}
+			.title {
+				margin-bottom: 4rem;
+				text-align: center;
+			}
+			.title h1 {
+				font-size: clamp(2.5rem, 5vw, 4rem);
+				margin: 0 0 0.5em 0;
+				font-weight: 800;
+			}
+			.date {
+				font-size: 0.9rem;
+				text-transform: uppercase;
+				letter-spacing: 0.2em;
+				color: var(--text-muted);
+				margin-bottom: 1rem;
+			}
+			.last-updated-on {
+				font-style: italic;
+				font-size: 0.8rem;
+			}
+			.back-link a {
+				display: inline-block;
+				margin-bottom: 2rem;
+				color: #000;
+				text-decoration: none;
+				font-weight: 600;
+				transition: transform 0.3s ease;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main>
+			<article class="container-wide">
+				<div class="prose">
+					<a href={`/${lang}/blog`} class="back-link reveal">← {lang === 'es' ? 'Volver al blog' : 'Back to blog'}</a>
+					<div class="title reveal">
+						<div class="date">
+							<FormattedDate date={pubDate} />
+							{
+								updatedDate && (
+									<div class="last-updated-on">
+										{lang === 'es' ? 'Última actualización el ' : 'Last updated on '} <FormattedDate date={updatedDate} />
+									</div>
+								)
+							}
+						</div>
+						<h1>{title}</h1>
+					</div>
+				</div>
+				<div class="hero-image reveal">
+					{heroImage && <Image width={1200} height={600} src={heroImage} alt="" />}
+				</div>
+				<div class="prose reveal">
+					<slot />
+				</div>
+			</article>
+		</main>
+		<script>
+			import { gsap } from "gsap";
+			import { ScrollTrigger } from "gsap/ScrollTrigger";
+			gsap.registerPlugin(ScrollTrigger);
+
+			window.addEventListener('DOMContentLoaded', () => {
+				gsap.set('.reveal', { y: 30, opacity: 0 });
+				gsap.to('.reveal', {
+					y: 0,
+					opacity: 1,
+					duration: 1,
+					stagger: 0.2,
+					ease: "power3.out"
+				});
+			});
+		</script>
+	</body>
+</html>
