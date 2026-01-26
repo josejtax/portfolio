@@ -8,6 +8,11 @@ Este fin de semana he sido testigo del impresionante auge de Clawd, una herramie
 
 CLAWD no es solo otro chatbot más. Es un framework de agentes de IA que permite crear asistentes conversacionales capaces de interactuar a través de diferentes plataformas de mensajería como WhatsApp, Telegram, Discord, entre otras. Lo que lo hace especial es su capacidad para integrarse con herramientas locales y externas, convirtiéndolo en un centro de automatización potente y versátil.
 
+Lo que más me sorprendió fue su capacidad para integrarse con herramientas locales y externas, convirtiéndolo en un verdadero centro de automatización. Desde leer y escribir archivos, hasta ejecutar comandos en la terminal o navegar por internet, todo ello controlado desde una conversación en WhatsApp.
+
+## Mi experiencia personal
+Tras configurar mi instancia en una Raspberry Pi, he podido experimentar de primera mano cómo una IA puede gestionar tareas complejas con simples instrucciones. La combinación de simplicidad para el usuario final y potencia para los desarrolladores es lo que realmente marca la diferencia
+
 ## Instalación
 La instalación de Clawd requiere algunos pasos específicos que debes seguir cuidadosamente para evitar problemas de seguridad o funcionamiento.
 
@@ -142,3 +147,5 @@ clawdbot start
 
 ### Bibliografía
 Documentación oficial de Clawd: https://docs.clawd.bot/
+
+¿Has probado Clawd? ¿Cómo ha sido tu experiencia con frameworks de agentes de IA? Me encantaría leer tus comentarios y conocer cómo estás aplicando esta tecnología.
